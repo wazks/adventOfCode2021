@@ -1,0 +1,77 @@
+"use strict"
+
+const input = `start-A
+start-b
+A-c
+A-b
+b-d
+A-end
+b-end`
+
+const lines = input.split("\n")
+class Node {
+  constructor(name, lowerCase) {
+    this.name = name
+    this.lowerCase = lowerCase
+  }
+  connections = []
+}
+
+const nodes = []
+
+const getNode = name => nodes.find(el => el.name.includes(name))
+
+const findConnections = node => getNode(node).connections
+
+for (const line of lines) {
+  const [enter, exit] = line.split("-")
+
+  const checkIfLowerCase = string => string.toLowerCase() === string
+  const createNewNode = (node, antinode) => {
+    if (!nodes.some(el => el.name.includes(node)))
+      nodes.push(new Node(node, checkIfLowerCase(node)))
+    findConnections(node).push(antinode)
+  }
+
+  createNewNode(enter, exit)
+  createNewNode(exit, enter)
+}
+
+const paths = []
+let numOfPaths = 15
+
+//for ( const node1 of findConnections( "start" ) ) {
+for (let i = 0; i < numOfPaths; i++) {
+  let curPath = []
+  const newPath = singleNode => {
+    const connection = findConnections(singleNode).find(el => {
+      if (getNode(el).lowerCase) {
+        if (!curPath.includes(el)) return el
+      } else return el
+    })
+    console.log(connection)
+    if (connection) {
+      //   curPath.push(singleNode)
+      //   newPath(connection)
+
+      //   curPath.push(singleNode)
+      //   console.log(paths, curPath)
+      if (paths.some(path => curPath.every((step, i) => path[i] === step))) {
+        curPath.push(singleNode)
+        newPath(connection)
+        //     //if any path contains the curPath just go forward
+        //     newPath(connection)
+        //   } else {
+        //     //if no paths contain the new path, don't continue but make another one
+        //     return
+        //   }
+      } else {
+        cur
+      }
+    }
+  }
+  newPath("start")
+  paths.push(curPath)
+}
+
+console.log(paths)
