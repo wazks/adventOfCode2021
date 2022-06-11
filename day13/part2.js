@@ -25,9 +25,9 @@ for (let fold of operations.split("\n")) {
 
 let string = ''
 for(let i=0; i<6; i++) {
-  for(let j=0; j<40; j++) {
-    if(dataSet.has(`${j},${i}`)) string+="#" 
-      else string+="."  
+  for(let j=0; j<39; j++) {
+    if(dataSet.has(`${j},${i}`)) string+="█"
+      else string+=" "  
   }
     string+="\n"
 }
